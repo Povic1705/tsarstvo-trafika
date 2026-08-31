@@ -173,7 +173,12 @@
         <p>Коротко опишите задачу — отвечу в Telegram или перезвоню. Если так проще, сразу пишите или звоните.</p>
         <div class="lead__links" data-lead-links></div>
       </div>
-      <form class="form" id="lead-form" novalidate>
+      <form class="form" id="mail-form" action="https://formsubmit.co/mpovolocky@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Заявка с tsarstvo-trafika.ru">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://tsarstvo-trafika.ru/?sent=1#lead">
+        <input type="text" name="_honey" class="form__honey" tabindex="-1" autocomplete="off">
         <label>
           <span>Имя</span>
           <input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться">
@@ -188,8 +193,7 @@
         </label>
         <button class="btn btn--gold btn--full" type="submit">Отправить заявку</button>
         <p class="form__note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных, чтобы я могла связаться по заявке.</p>
-        <p class="form__ok" id="form-ok" hidden>Заявка отправлена. Если это первый раз, на тестовую почту придёт письмо Formsubmit — откройте его и подтвердите адрес, следующие заявки начнут приходить сразу.</p>
-        <p class="form__err" id="form-err" hidden>Не отправилось. Напишите в Telegram или позвоните — контакты слева.</p>
+        <p class="form__ok" id="form-ok" hidden>Заявка отправлена на почту. Если это первый раз, откройте письмо Formsubmit и подтвердите адрес.</p>
       </form>
     </div>
   </section>
@@ -209,6 +213,6 @@
 
   <div class="sticky" data-sticky></div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

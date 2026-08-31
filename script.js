@@ -70,9 +70,9 @@
   const sticky = document.querySelector("[data-sticky]");
   if (sticky) {
     sticky.innerHTML = "";
-    if (tgHref) sticky.appendChild(el('<a href="' + tgHref + '" target="_blank" rel="noopener">Telegram</a>'));
+    sticky.appendChild(el('<a href="#lead">Заявка</a>'));
+    if (tgHref) sticky.appendChild(el('<a class="sticky--ghost" href="' + tgHref + '" target="_blank" rel="noopener">Telegram</a>'));
     if (phone) sticky.appendChild(el('<a class="sticky--ghost" href="' + phoneHref + '">Позвонить</a>'));
-    sticky.appendChild(el('<a class="' + (phone || tgHref ? "sticky--ghost" : "") + '" href="#lead">Заявка</a>'));
   }
 
   function goal(name) {
@@ -82,64 +82,17 @@
     }
   }
 
-  const form = document.getElementById("lead-form");
+  const form = document.getElementById("mail-form");
   const ok = document.getElementById("form-ok");
-  const err = document.getElementById("form-err");
   const email = (site.email || "").trim();
-  if (form) {
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const data = new FormData(form);
-      const name = String(data.get("name") || "").trim();
-      const phoneValue = String(data.get("phone") || "").trim();
-      const task = String(data.get("task") || "").trim();
-      if (!name || !phoneValue) return;
-      if (ok) ok.hidden = true;
-      if (err) err.hidden = true;
-      if (!email) {
-        if (err) err.hidden = false;
-        return;
-      }
-
-      const button = form.querySelector('button[type="submit"]');
-      const oldLabel = button ? button.textContent : "";
-      if (button) {
-        button.disabled = true;
-        button.textContent = "Отправляю…";
-      }
-
-      fetch("https://formsubmit.co/ajax/" + encodeURIComponent(email), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          _subject: "Заявка с tsarstvo-trafika.ru",
-          name: name,
-          phone: phoneValue,
-          task: task || "—",
-          source: "tsarstvo-trafika.ru"
-        })
-      })
-        .then(function (response) {
-          if (!response.ok) throw new Error("fail");
-          return response.json();
-        })
-        .then(function () {
-          goal("lead");
-          form.reset();
-          if (ok) ok.hidden = false;
-        })
-        .catch(function () {
-          if (err) err.hidden = false;
-        })
-        .then(function () {
-          if (button) {
-            button.disabled = false;
-            button.textContent = oldLabel;
-          }
-        });
-    });
+  if (form && email) {
+    form.action = "https://formsubmit.co/" + encodeURIComponent(email);
+    form.method = "POST";
+    const next = form.querySelector('input[name="_next"]');
+    if (next) next.value = location.origin + "/?sent=1#lead";
+  }
+  if (ok && /(?:\?|&)sent=1(?:&|$)/.test(location.search)) {
+    ok.hidden = false;
+    goal("lead");
   }
 })();
