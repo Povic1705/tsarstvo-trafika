@@ -484,18 +484,17 @@ a {
 .form__ok {
   color: var(--gold-3);
   font-weight: 700;
-  display: grid;
-  gap: 10px;
 }
 
-.form__ok[hidden] {
+.form__ok[hidden],
+.form__err[hidden] {
   display: none;
 }
 
-.form__ok textarea {
-  font-weight: 500;
-  color: var(--ink);
-  resize: vertical;
+.form__err {
+  color: #9a3b2f;
+  font-weight: 700;
+  font-size: 13px;
 }
 
 .lead__links a,

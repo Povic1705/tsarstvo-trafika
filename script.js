@@ -84,7 +84,8 @@
 
   const form = document.getElementById("lead-form");
   const ok = document.getElementById("form-ok");
-  const draft = document.getElementById("form-draft");
+  const err = document.getElementById("form-err");
+  const email = (site.email || "").trim();
   if (form) {
     form.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -93,30 +94,52 @@
       const phoneValue = String(data.get("phone") || "").trim();
       const task = String(data.get("task") || "").trim();
       if (!name || !phoneValue) return;
-
-      goal("lead");
-
-      const text = [
-        "Здравствуйте! Заявка с сайта tsarstvo-trafika.ru",
-        "Имя: " + name,
-        "Телефон: " + phoneValue,
-        task ? "Задача: " + task : ""
-      ].filter(Boolean).join("\n");
-
-      if (draft) {
-        draft.value = text;
-        draft.focus();
-        draft.select();
+      if (ok) ok.hidden = true;
+      if (err) err.hidden = true;
+      if (!email) {
+        if (err) err.hidden = false;
+        return;
       }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).catch(function () {});
-      }
-      if (ok) ok.hidden = false;
 
-      if (telegram) {
-        const encoded = encodeURIComponent(text);
-        window.location.href = "tg://resolve?domain=" + telegram + "&text=" + encoded;
+      const button = form.querySelector('button[type="submit"]');
+      const oldLabel = button ? button.textContent : "";
+      if (button) {
+        button.disabled = true;
+        button.textContent = "Отправляю…";
       }
+
+      fetch("https://formsubmit.co/ajax/" + encodeURIComponent(email), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          _subject: "Заявка с tsarstvo-trafika.ru",
+          name: name,
+          phone: phoneValue,
+          task: task || "—",
+          source: "tsarstvo-trafika.ru"
+        })
+      })
+        .then(function (response) {
+          if (!response.ok) throw new Error("fail");
+          return response.json();
+        })
+        .then(function () {
+          goal("lead");
+          form.reset();
+          if (ok) ok.hidden = false;
+        })
+        .catch(function () {
+          if (err) err.hidden = false;
+        })
+        .then(function () {
+          if (button) {
+            button.disabled = false;
+            button.textContent = oldLabel;
+          }
+        });
     });
   }
 })();

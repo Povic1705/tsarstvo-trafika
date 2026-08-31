@@ -27,6 +27,7 @@
       telegramChannel: "tsarstvo_trafika",
       instagram: "tsarstvo_trafika",
       youtube: "https://youtube.com/@tsarstvo_trafika",
+      email: "mpovolocky@gmail.com",
       metrikaId: ""
     };
   </script>
@@ -187,10 +188,8 @@
         </label>
         <button class="btn btn--gold btn--full" type="submit">Отправить заявку</button>
         <p class="form__note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных, чтобы я могла связаться по заявке.</p>
-        <div class="form__ok" id="form-ok" hidden>
-          <p>Текст заявки скопирован. Откроется Telegram — нажмите «Отправить». Если поле пустое, вставьте сообщение в чат (Ctrl+V / ⌘V).</p>
-          <textarea id="form-draft" readonly rows="5"></textarea>
-        </div>
+        <p class="form__ok" id="form-ok" hidden>Заявка отправлена. Если это первый раз, на тестовую почту придёт письмо Formsubmit — откройте его и подтвердите адрес, следующие заявки начнут приходить сразу.</p>
+        <p class="form__err" id="form-err" hidden>Не отправилось. Напишите в Telegram или позвоните — контакты слева.</p>
       </form>
     </div>
   </section>
