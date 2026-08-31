@@ -491,13 +491,6 @@ a {
   display: none;
 }
 
-.form__honey {
-  position: absolute;
-  left: -9999px;
-  height: 0;
-  opacity: 0;
-}
-
 .lead__links a,
 .lead__links span {
   padding: 14px 16px;
