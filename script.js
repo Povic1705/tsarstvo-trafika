@@ -83,16 +83,84 @@
   }
 
   const form = document.getElementById("mail-form");
-  const ok = document.getElementById("form-ok");
+  const status = document.getElementById("form-status");
   const email = (site.email || "").trim();
-  if (form && email) {
-    form.action = "https://formsubmit.co/" + encodeURIComponent(email);
-    form.method = "POST";
-    const next = form.querySelector('input[name="_next"]');
-    if (next) next.value = location.origin + "/?sent=1#lead";
+
+  function setStatus(type, text) {
+    if (!status) return;
+    status.hidden = false;
+    status.className = "form__status is-" + type;
+    status.textContent = text;
   }
-  if (ok && /(?:\?|&)sent=1(?:&|$)/.test(location.search)) {
-    ok.hidden = false;
-    goal("lead");
+
+  function sendMail(payload) {
+    const controller = new AbortController();
+    const timer = setTimeout(function () {
+      controller.abort();
+    }, 12000);
+    return fetch("https://formsubmit.co/ajax/" + encodeURIComponent(email), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    }).then(function (response) {
+      clearTimeout(timer);
+      if (!response.ok) throw new Error("fail");
+      return response.json();
+    });
+  }
+
+  if (form && email) {
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const phoneValue = String(data.get("phone") || "").trim();
+      const task = String(data.get("task") || "").trim();
+      if (!name || !phoneValue) {
+        setStatus("err", "Напишите имя и телефон.");
+        return;
+      }
+
+      const button = form.querySelector('button[type="submit"]');
+      const oldLabel = button ? button.textContent : "";
+      if (button) {
+        button.disabled = true;
+        button.textContent = "Отправляю…";
+      }
+      setStatus("wait", "Отправляю заявку, подождите несколько секунд…");
+
+      sendMail({
+        _subject: "Заявка с tsarstvo-trafika.ru",
+        name: name,
+        phone: phoneValue,
+        task: task || "—",
+        source: location.href
+      })
+        .then(function () {
+          goal("lead");
+          form.reset();
+          setStatus("ok", "Заявка отправлена. Марина получит письмо и свяжется с вами.");
+        })
+        .catch(function () {
+          setStatus(
+            "err",
+            "Письмо пока не ушло. Напишите в Telegram @" +
+              telegram +
+              " или позвоните " +
+              phone +
+              " — заявка так точно дойдёт."
+          );
+        })
+        .then(function () {
+          if (button) {
+            button.disabled = false;
+            button.textContent = oldLabel;
+          }
+        });
+    });
   }
 })();

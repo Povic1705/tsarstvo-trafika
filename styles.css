@@ -486,9 +486,26 @@ a {
   font-weight: 700;
 }
 
-.form__ok[hidden],
-.form__err[hidden] {
+.form__status {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.form__status[hidden] {
   display: none;
+}
+
+.form__status.is-ok {
+  color: var(--gold-3);
+}
+
+.form__status.is-err {
+  color: #9a3b2f;
+}
+
+.form__status.is-wait {
+  color: var(--muted);
 }
 
 .lead__links a,
