@@ -187,7 +187,10 @@
         </label>
         <button class="btn btn--gold btn--full" type="submit">Отправить заявку</button>
         <p class="form__note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных, чтобы я могла связаться по заявке.</p>
-        <p class="form__ok" id="form-ok" hidden>Открываю Telegram — допишите сообщение, если нужно, и отправьте.</p>
+        <div class="form__ok" id="form-ok" hidden>
+          <p>Текст заявки скопирован. Откроется Telegram — нажмите «Отправить». Если поле пустое, вставьте сообщение в чат (Ctrl+V / ⌘V).</p>
+          <textarea id="form-draft" readonly rows="5"></textarea>
+        </div>
       </form>
     </div>
   </section>

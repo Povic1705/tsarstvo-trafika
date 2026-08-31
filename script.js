@@ -84,6 +84,7 @@
 
   const form = document.getElementById("lead-form");
   const ok = document.getElementById("form-ok");
+  const draft = document.getElementById("form-draft");
   if (form) {
     form.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -96,17 +97,26 @@
       goal("lead");
 
       const text = [
-        "Здравствуйте! Заявка с сайта.",
+        "Здравствуйте! Заявка с сайта tsarstvo-trafika.ru",
         "Имя: " + name,
         "Телефон: " + phoneValue,
         task ? "Задача: " + task : ""
       ].filter(Boolean).join("\n");
 
-      if (tgHref) {
-        window.open(tgHref + "?text=" + encodeURIComponent(text), "_blank", "noopener");
+      if (draft) {
+        draft.value = text;
+        draft.focus();
+        draft.select();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(function () {});
       }
       if (ok) ok.hidden = false;
-      form.reset();
+
+      if (telegram) {
+        const encoded = encodeURIComponent(text);
+        window.location.href = "tg://resolve?domain=" + telegram + "&text=" + encoded;
+      }
     });
   }
 })();
