@@ -540,6 +540,37 @@ a {
   margin-top: 18px;
 }
 
+.footer__reqs {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.footer__reqs-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 18px;
+  color: var(--gold-3);
+  margin-bottom: 8px;
+}
+
+.footer__reqs ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  list-style: none;
+}
+
+.footer__reqs li {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.footer__reqs span {
+  color: var(--gold-3);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
 .sticky {
   position: fixed;
   left: 0;
