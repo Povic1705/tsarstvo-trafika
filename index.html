@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=13">
+  <link rel="stylesheet" href="styles.css?v=14">
 
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
@@ -199,8 +199,11 @@
           <span>Задача</span>
           <textarea name="task" rows="3" placeholder="Ниша, площадка, бюджет — что есть"></textarea>
         </label>
-        <button class="btn btn--gold btn--full" type="submit">Отправить заявку</button>
-        <p class="form__note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных, чтобы я могла связаться по заявке.</p>
+        <label class="form__consent">
+          <input type="checkbox" name="consent" id="form-consent" value="yes">
+          <span>Я даю согласие на обработку моих персональных данных в соответствии с <a href="/privacy/">Политикой конфиденциальности</a> (<a href="https://tsarstvo-trafika.ru/privacy/">https://tsarstvo-trafika.ru/privacy/</a>).</span>
+        </label>
+        <button class="btn btn--gold btn--full" type="submit" id="form-submit" disabled>Отправить заявку</button>
         <p class="form__status" id="form-status" hidden></p>
       </form>
     </div>
@@ -222,12 +225,12 @@
       </ul>
     </div>
     <div class="container footer__legal">
-      <p>Персональные данные из формы используются только для ответа на заявку и не передаются третьим лицам.</p>
+      <p><a href="/privacy/">Политика конфиденциальности</a></p>
     </div>
   </footer>
 
   <div class="sticky" data-sticky></div>
 
-  <script src="script.js?v=9"></script>
+  <script src="script.js?v=10"></script>
 </body>
 </html>

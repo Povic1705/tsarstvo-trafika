@@ -443,11 +443,67 @@ a {
   box-shadow: var(--shadow);
 }
 
-.form label {
+.form__consent {
   display: grid;
-  gap: 6px;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  align-items: start;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.form__consent input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--gold-3);
+  padding: 0;
+}
+
+.form__consent a {
+  color: var(--gold-3);
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.legal {
+  padding: 36px 0 64px;
+}
+
+.legal h1 {
+  font-family: Unbounded, sans-serif;
+  font-size: clamp(26px, 4vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.legal h2 {
+  font-size: 18px;
+  margin: 26px 0 10px;
+}
+
+.legal p,
+.legal li {
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.legal ul {
+  padding-left: 22px;
+  margin-bottom: 12px;
+}
+
+.legal a {
+  color: var(--gold-3);
 }
 
 .form input,
@@ -515,6 +571,10 @@ a {
 .footer {
   padding: 28px 0 110px;
   border-top: 1px solid var(--line);
+}
+
+.footer a:hover {
+  color: var(--gold-3);
 }
 
 .footer__name {

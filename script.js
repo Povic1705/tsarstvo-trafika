@@ -114,6 +114,15 @@
   }
 
   if (form && email) {
+    const consent = document.getElementById("form-consent");
+    const submitBtn = document.getElementById("form-submit");
+
+    function syncSubmit() {
+      if (submitBtn) submitBtn.disabled = !(consent && consent.checked);
+    }
+    if (consent) consent.addEventListener("change", syncSubmit);
+    syncSubmit();
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       const data = new FormData(form);
@@ -124,8 +133,12 @@
         setStatus("err", "Напишите имя и телефон.");
         return;
       }
+      if (!consent || !consent.checked) {
+        setStatus("err", "Поставьте согласие на обработку персональных данных.");
+        return;
+      }
 
-      const button = form.querySelector('button[type="submit"]');
+      const button = submitBtn || form.querySelector('button[type="submit"]');
       const oldLabel = button ? button.textContent : "";
       if (button) {
         button.disabled = true;
@@ -156,10 +169,8 @@
           );
         })
         .then(function () {
-          if (button) {
-            button.disabled = false;
-            button.textContent = oldLabel;
-          }
+          if (button) button.textContent = oldLabel;
+          syncSubmit();
         });
     });
   }

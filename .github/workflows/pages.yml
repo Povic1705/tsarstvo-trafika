@@ -24,8 +24,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Prepare files
         run: |
-          mkdir -p public
+          mkdir -p public/privacy
           cp index.html styles.css script.js CNAME .nojekyll public/
+          cp privacy/index.html public/privacy/
           cp -R images public/images
       - uses: actions/upload-pages-artifact@v3
         with:
