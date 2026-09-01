@@ -363,8 +363,9 @@ a {
 }
 
 .split__media img {
-  aspect-ratio: 16 / 11;
-  object-position: center 30%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .split__body {
@@ -615,6 +616,7 @@ a {
     height: 100%;
     aspect-ratio: auto;
     min-height: 420px;
+    object-position: center top;
   }
 
   .hero__actions {
