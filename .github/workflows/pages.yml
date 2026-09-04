@@ -25,9 +25,17 @@ jobs:
       - name: Prepare files
         run: |
           mkdir -p public/privacy
-          cp index.html styles.css script.js CNAME .nojekyll public/
+          cp CNAME .nojekyll styles.css public/
           cp privacy/index.html public/privacy/
-          cp -R images public/images
+          if grep -qE '^\s*siteOn:\s*true\b' config.js; then
+            mkdir -p public/thanks
+            cp home.html public/index.html
+            cp config.js script.js public/
+            cp thanks/index.html public/thanks/
+            cp -R images public/images
+          else
+            cp index.html public/index.html
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public

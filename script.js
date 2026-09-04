@@ -155,8 +155,10 @@
       })
         .then(function () {
           goal("lead");
-          form.reset();
-          setStatus("ok", "Заявка отправлена. Марина получит письмо и свяжется с вами.");
+          try {
+            sessionStorage.setItem("guideReady", "1");
+          } catch (err) {}
+          window.location.href = "/thanks/";
         })
         .catch(function () {
           setStatus(
@@ -167,11 +169,36 @@
               phone +
               " — заявка так точно дойдёт."
           );
-        })
-        .then(function () {
           if (button) button.textContent = oldLabel;
           syncSubmit();
         });
     });
+  }
+
+  const guidePage = document.getElementById("guide-page");
+  if (guidePage) {
+    const locked = document.getElementById("guide-locked");
+    const ready = document.getElementById("guide-ready");
+    const waiting = document.getElementById("guide-waiting");
+    const download = document.getElementById("guide-download");
+    const url = (site.guideUrl || "").trim();
+    let passed = false;
+    try {
+      passed = sessionStorage.getItem("guideReady") === "1";
+    } catch (err) {}
+
+    if (!passed) {
+      if (locked) locked.hidden = false;
+    } else if (url) {
+      if (ready) ready.hidden = false;
+      if (download) {
+        download.href = url;
+        download.addEventListener("click", function () {
+          goal("guide");
+        });
+      }
+    } else if (waiting) {
+      waiting.hidden = false;
+    }
   }
 })();

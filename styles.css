@@ -718,3 +718,43 @@ a {
     display: none;
   }
 }
+
+.gate {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.gate__main {
+  flex: 1;
+  display: grid;
+  align-items: center;
+  padding: 48px 0 32px;
+}
+
+.gate__card {
+  width: min(560px, 100%);
+  margin: 0 auto;
+  padding: 36px 28px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.gate__card h1 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.gate__card p {
+  color: var(--muted);
+}
+
+.thanks__actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
